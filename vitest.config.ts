@@ -1,9 +1,16 @@
 // eslint-disable-next-line import/no-unresolved
-import { defineConfig } from "vitest/config"
+import { defineViteConfig } from "smartbundle"
+import { defineConfig, mergeConfig } from "vitest/config"
 
-export default defineConfig({
-  test: {
-    name: "effector-apollo",
-    coverage: { provider: "istanbul" },
-  },
+export default defineConfig(async () => {
+  const smartbundleConfig = await defineViteConfig()
+  return mergeConfig(
+    smartbundleConfig,
+    defineConfig({
+      test: {
+        name: "effector-apollo",
+        coverage: { provider: "istanbul" },
+      },
+    }),
+  )
 })
